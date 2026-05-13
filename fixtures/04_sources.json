@@ -1,0 +1,8 @@
+[
+  {"model": "catalog.source", "pk": 1, "fields": {"name": "hh.ru", "type": "jobboard", "cost_per_month": "35000", "is_active": true}},
+  {"model": "catalog.source", "pk": 2, "fields": {"name": "Habr Career", "type": "jobboard", "cost_per_month": "20000", "is_active": true}},
+  {"model": "catalog.source", "pk": 3, "fields": {"name": "SuperJob", "type": "jobboard", "cost_per_month": "15000", "is_active": true}},
+  {"model": "catalog.source", "pk": 4, "fields": {"name": "Telegram-канал «Юниткод»", "type": "social", "cost_per_month": "0", "is_active": true}},
+  {"model": "catalog.source", "pk": 5, "fields": {"name": "Реферал от сотрудника", "type": "referral", "cost_per_month": "0", "is_active": true}},
+  {"model": "catalog.source", "pk": 6, "fields": {"name": "LinkedIn", "type": "social", "cost_per_month": "10000", "is_active": true}}
+]
