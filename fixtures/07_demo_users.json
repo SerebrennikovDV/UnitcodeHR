@@ -1,0 +1,30 @@
+[
+  {"model": "accounts.user", "pk": 1, "fields": {
+    "password": "pbkdf2_sha256$870000$placeholder$ChangeAfterLoaddata=",
+    "last_login": null,
+    "is_superuser": true, "is_staff": true, "is_active": true,
+    "username": "admin", "email": "admin@unitcode.local",
+    "first_name": "Дмитрий", "last_name": "Серебренников",
+    "role": 1, "department": 1, "phone": "+7 (495) 000-00-01",
+    "notify_email": true,
+    "date_joined": "2026-05-11T09:00:00Z"
+  }},
+  {"model": "accounts.user", "pk": 2, "fields": {
+    "password": "pbkdf2_sha256$870000$placeholder$ChangeAfterLoaddata=",
+    "is_superuser": false, "is_staff": true, "is_active": true,
+    "username": "hr_lead", "email": "hr@unitcode.local",
+    "first_name": "Анна", "last_name": "Иванова",
+    "role": 2, "department": 5, "phone": "+7 (495) 000-00-02",
+    "notify_email": true,
+    "date_joined": "2026-05-11T09:00:00Z"
+  }},
+  {"model": "accounts.user", "pk": 3, "fields": {
+    "password": "pbkdf2_sha256$870000$placeholder$ChangeAfterLoaddata=",
+    "is_superuser": false, "is_staff": false, "is_active": true,
+    "username": "hire_lead", "email": "hire@unitcode.local",
+    "first_name": "Михаил", "last_name": "Лобов",
+    "role": 3, "department": 2, "phone": "+7 (495) 000-00-03",
+    "notify_email": true,
+    "date_joined": "2026-05-11T09:00:00Z"
+  }}
+]
