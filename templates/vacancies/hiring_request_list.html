@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex align-items-center mb-3">
+    <h1 class="me-auto">Заявки на найм</h1>
+    <a href="/vacancies/requests/new/" class="btn btn-primary">Новая заявка</a>
+</div>
+
+<table class="table table-hover">
+    <thead class="table-light">
+        <tr><th>#</th><th>Должность</th><th>Отдел</th><th>Инициатор</th><th>Статус</th><th>Срочность</th><th>Создана</th></tr>
+    </thead>
+    <tbody>
+    {% for r in requests %}
+        <tr>
+            <td>{{ r.pk }}</td>
+            <td><a href="/vacancies/requests/{{ r.pk }}/">{{ r.title }}</a></td>
+            <td>{{ r.department }}</td>
+            <td>{{ r.requested_by }}</td>
+            <td><span class="badge bg-secondary">{{ r.get_status_display }}</span></td>
+            <td>{{ r.get_urgency_display }}</td>
+            <td>{{ r.created_at|date:"d.m.Y" }}</td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="7" class="text-center text-muted">Заявок ещё нет</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

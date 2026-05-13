@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Заявка #{{ request_obj.pk }} — {{ request_obj.title }}</h1>
+<dl class="row">
+    <dt class="col-sm-3">Отдел</dt><dd class="col-sm-9">{{ request_obj.department }}</dd>
+    <dt class="col-sm-3">Должность</dt><dd class="col-sm-9">{{ request_obj.position }}</dd>
+    <dt class="col-sm-3">Инициатор</dt><dd class="col-sm-9">{{ request_obj.requested_by }}</dd>
+    <dt class="col-sm-3">Статус</dt><dd class="col-sm-9">{{ request_obj.get_status_display }}</dd>
+    <dt class="col-sm-3">Вилка ЗП</dt><dd class="col-sm-9">{{ request_obj.salary_min }} – {{ request_obj.salary_max }} ₽</dd>
+    <dt class="col-sm-3">Срочность</dt><dd class="col-sm-9">{{ request_obj.get_urgency_display }}</dd>
+</dl>
+
+<h5>Описание задач</h5>
+<p>{{ request_obj.description|linebreaks }}</p>
+{% endblock %}

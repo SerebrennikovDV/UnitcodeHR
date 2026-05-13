@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}{{ vacancy.title }} — карьера в {{ COMPANY_NAME }}{% endblock %}
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1>{{ vacancy.title }}</h1>
+        <p class="text-muted">Опыт от {{ vacancy.min_experience_years }} лет · удалённый формат</p>
+
+        <h4 class="mt-4">Описание</h4>
+        <p>{{ vacancy.description|linebreaks }}</p>
+
+        <h4 class="mt-4">Требования</h4>
+        <p>{{ vacancy.requirements|linebreaks }}</p>
+
+        {% if vacancy.benefits %}
+        <h4 class="mt-4">Условия</h4>
+        <p>{{ vacancy.benefits|linebreaks }}</p>
+        {% endif %}
+
+        <a href="{% url 'apply_to_vacancy' vacancy.slug %}" class="btn btn-primary btn-lg mt-3">
+            <i class="bi bi-send"></i> Откликнуться
+        </a>
+    </div>
+</div>
+{% endblock %}

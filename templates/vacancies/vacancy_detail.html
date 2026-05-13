@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ vacancy.title }}</h1>
+<p>
+    Статус: <span class="badge bg-info">{{ vacancy.get_status_display }}</span>
+    · Опыт от {{ vacancy.min_experience_years }} лет
+    · Рекрутёр: {{ vacancy.recruiter }}
+</p>
+
+<h4>Описание</h4>
+<p>{{ vacancy.description|linebreaks }}</p>
+
+<h4>Требования</h4>
+<p>{{ vacancy.requirements|linebreaks }}</p>
+
+<h4>Требуемые навыки</h4>
+<div class="d-flex flex-wrap gap-2 mb-3">
+    {% for vs in vacancy.vacancy_skills.all %}
+        <span class="badge bg-{% if vs.is_required %}primary{% else %}secondary{% endif %}">
+            {{ vs.skill.name }} {% if vs.is_required %}(обязательно){% endif %} — вес {{ vs.weight }}
+        </span>
+    {% endfor %}
+</div>
+
+<a href="/vacancies/public/{{ vacancy.slug }}/" class="btn btn-outline-primary">Публичная страница</a>
+{% endblock %}

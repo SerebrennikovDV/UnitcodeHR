@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Вакансии — управление{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center mb-3">
+    <h1 class="me-auto">Вакансии</h1>
+    <a href="/vacancies/requests/new/" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Новая заявка на найм
+    </a>
+</div>
+
+<table class="table table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>#</th><th>Название</th><th>Рекрутёр</th>
+            <th>Опыт</th><th>Статус</th><th>Срок</th><th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for v in vacancies %}
+        <tr>
+            <td>{{ v.pk }}</td>
+            <td><a href="{% url 'vacancy_detail' v.pk %}">{{ v.title }}</a></td>
+            <td>{{ v.recruiter }}</td>
+            <td>от {{ v.min_experience_years }} лет</td>
+            <td><span class="badge bg-secondary">{{ v.get_status_display }}</span></td>
+            <td>{{ v.deadline|date:"d.m.Y"|default:"—" }}</td>
+            <td><a href="{% url 'vacancy_detail' v.pk %}" class="btn btn-sm btn-outline-primary">Открыть</a></td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="7" class="text-center text-muted">Нет вакансий</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
