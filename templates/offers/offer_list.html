@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Офферы</h1>
+<table class="table table-hover">
+    <thead class="table-light">
+        <tr><th>#</th><th>Кандидат</th><th>Вакансия</th><th>ЗП</th><th>Старт</th><th>Статус</th><th></th></tr>
+    </thead>
+    <tbody>
+    {% for o in offers %}
+        <tr>
+            <td>{{ o.pk }}</td>
+            <td>{{ o.application.candidate }}</td>
+            <td>{{ o.application.vacancy }}</td>
+            <td>{{ o.salary }} ₽</td>
+            <td>{{ o.start_date|date:"d.m.Y" }}</td>
+            <td><span class="badge bg-info">{{ o.get_status_display }}</span></td>
+            <td><a href="{% url 'offer_detail' o.pk %}" class="btn btn-sm btn-outline-primary">Открыть</a></td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="7" class="text-center text-muted">Офферов пока нет</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Оффер #{{ offer.pk }}</h1>
+<dl class="row">
+    <dt class="col-sm-3">Кандидат</dt><dd class="col-sm-9">{{ offer.application.candidate }}</dd>
+    <dt class="col-sm-3">Вакансия</dt><dd class="col-sm-9">{{ offer.application.vacancy }}</dd>
+    <dt class="col-sm-3">Зарплата</dt><dd class="col-sm-9">{{ offer.salary }} ₽</dd>
+    <dt class="col-sm-3">Дата выхода</dt><dd class="col-sm-9">{{ offer.start_date|date:"d.m.Y" }}</dd>
+    <dt class="col-sm-3">Испытательный срок</dt><dd class="col-sm-9">{{ offer.probation_months }} мес.</dd>
+    <dt class="col-sm-3">Статус</dt><dd class="col-sm-9">{{ offer.get_status_display }}</dd>
+</dl>
+
+<div class="mt-3">
+    <a href="{% url 'offer_generate' offer.pk %}" class="btn btn-outline-primary">
+        <i class="bi bi-file-earmark-word"></i> Перегенерировать .docx
+    </a>
+    {% if offer.document %}
+        <a href="{% url 'offer_download' offer.pk %}" class="btn btn-success">
+            <i class="bi bi-download"></i> Скачать оффер
+        </a>
+    {% endif %}
+</div>
+{% endblock %}
