@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}HR-аналитика — дашборд{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center mb-3">
+    <h1 class="me-auto">HR-аналитика</h1>
+    <a href="{% url 'analytics_export' %}" class="btn btn-outline-success">
+        <i class="bi bi-file-earmark-excel"></i> Экспорт в .xlsx
+    </a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card text-bg-primary"><div class="card-body">
+            <h6>Time-to-Hire</h6>
+            <p class="display-6 fw-bold mb-0">{{ time_to_hire.avg_days_to_hire }} дн.</p>
+            <small>За {{ time_to_hire.period_days }} дн. · {{ time_to_hire.closed_count }} вакансий</small>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-success"><div class="card-body">
+            <h6>Cost-per-Hire</h6>
+            <p class="display-6 fw-bold mb-0">{{ cost_per_hire.cost_per_hire }} ₽</p>
+            <small>За {{ cost_per_hire.period_days }} дн. · {{ cost_per_hire.hires }} наймов</small>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-info"><div class="card-body">
+            <h6>Прохождение испытательного</h6>
+            <p class="display-6 fw-bold mb-0">{{ probation.rate }} %</p>
+            <small>{{ probation.passed }} из {{ probation.total }}</small>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-warning"><div class="card-body">
+            <h6>Источников активно</h6>
+            <p class="display-6 fw-bold mb-0">{{ source_of_hire|length }}</p>
+        </div></div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-7">
+        <div class="card"><div class="card-body">
+            <h5>Воронка подбора</h5>
+            <canvas id="funnelChart" height="220"></canvas>
+        </div></div>
+    </div>
+    <div class="col-md-5">
+        <div class="card"><div class="card-body">
+            <h5>Эффективность источников</h5>
+            <table class="table table-sm">
+                <thead><tr><th>Источник</th><th>Канд.</th><th>Наняты</th><th>Конв.</th></tr></thead>
+                <tbody>
+                {% for r in source_of_hire %}
+                    <tr><td>{{ r.source }}</td><td>{{ r.total_candidates }}</td>
+                        <td>{{ r.hired }}</td><td>{{ r.conversion_pct }} %</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div></div>
+    </div>
+</div>
+
+<script>
+const funnel = {{ funnel|safe|default:"[]" }};
+const labels = funnel.map(r => r.stage);
+const data = funnel.map(r => r.reached);
+const colors = funnel.map(r => r.color || '#0d6efd');
+new Chart(document.getElementById('funnelChart'), {
+    type: 'bar',
+    data: { labels, datasets: [{ label: 'Откликов на этапе', data, backgroundColor: colors }] },
+    options: { responsive: true, plugins: { legend: { display: false } } }
+});
+</script>
+{% endblock %}
