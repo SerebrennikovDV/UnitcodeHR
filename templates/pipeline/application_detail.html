@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Отклик #{{ application.pk }}: {{ application.candidate }} → {{ application.vacancy }}</h1>
+
+{% if application.match %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h4>Результаты скрининга</h4>
+        <p>
+            <span class="badge bg-{{ application.match.color }} fs-5">
+                {{ application.match.score }} % · {{ application.match.get_verdict_display }}
+            </span>
+        </p>
+        {% if application.match.matched_keywords %}
+            <p><strong>Найдены:</strong>
+                {% for k in application.match.matched_keywords %}<span class="badge bg-success">{{ k }}</span>{% endfor %}
+            </p>
+        {% endif %}
+        {% if application.match.missing_keywords %}
+            <p><strong>Не найдены:</strong>
+                {% for k in application.match.missing_keywords %}<span class="badge bg-secondary">{{ k }}</span>{% endfor %}
+            </p>
+        {% endif %}
+        {% if application.match.reasons %}
+            <details><summary>Подробности расчёта</summary>
+                <pre class="small">{{ application.match.reasons }}</pre>
+            </details>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h4>Перевод по этапам</h4>
+        {% if application.closed_at %}
+            <form method="post" action="{% url 'application_restore' application.pk %}">
+                {% csrf_token %}
+                <button class="btn btn-warning">Вернуть в воронку</button>
+            </form>
+        {% else %}
+        <form method="post" action="{% url 'application_move' application.pk %}" class="row g-2">
+            {% csrf_token %}
+            <div class="col-md-4">
+                <select name="stage_id" class="form-select">
+                    {% for s in stages %}<option value="{{ s.pk }}">{{ s.name }}</option>{% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6"><input type="text" name="comment" class="form-control" placeholder="Комментарий"></div>
+            <div class="col-md-2"><button class="btn btn-primary w-100">Переместить</button></div>
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h4>История этапов</h4>
+        <ul class="list-group list-group-flush">
+            {% for h in application.stage_history.all %}
+                <li class="list-group-item">
+                    <strong>{{ h.changed_at|date:"d.m.Y H:i" }}</strong> —
+                    <span class="badge" style="background-color:{{ h.stage.color }}">{{ h.stage }}</span>
+                    {% if h.changed_by %}({{ h.changed_by }}){% endif %}
+                    {% if h.comment %}<br><small class="text-muted">{{ h.comment }}</small>{% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Интервью</h4>
+        <a href="{% url 'interview_schedule' application.pk %}" class="btn btn-sm btn-outline-primary mb-2">+ Запланировать интервью</a>
+        <ul class="list-group list-group-flush">
+            {% for i in application.interviews.all %}
+                <li class="list-group-item">
+                    {{ i.get_kind_display }} — {{ i.scheduled_at|date:"d.m.Y H:i" }},
+                    интервьюер {{ i.interviewer|default:"—" }},
+                    результат: <strong>{{ i.get_result_display }}</strong>
+                    {% if i.rating %}({{ i.rating }}/5){% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

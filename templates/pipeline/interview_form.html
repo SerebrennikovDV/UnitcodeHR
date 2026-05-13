@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Планирование интервью</h1>
+<p>Отклик: <strong>{{ application }}</strong></p>
+<form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <label class="form-label">Тип интервью</label>
+        <select name="kind" class="form-select">
+            <option value="hr">HR-интервью</option>
+            <option value="tech">Техническое интервью</option>
+            <option value="final">Финальное интервью</option>
+            <option value="reference">Сбор рекомендаций</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Дата и время</label>
+        <input type="datetime-local" name="scheduled_at" class="form-control" required>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Длительность, мин.</label>
+        <input type="number" name="duration_minutes" class="form-control" value="60">
+    </div>
+    <div class="col-md-9">
+        <label class="form-label">Ссылка на встречу (Zoom / Telemost)</label>
+        <input type="url" name="meeting_link" class="form-control">
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary">Запланировать</button>
+        <a href="{% url 'application_detail' application.pk %}" class="btn btn-outline-secondary">Отмена</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load dict_extras %}
+{% block title %}Воронка подбора{% endblock %}
+
+{% block extra_head %}
+<style>
+.kanban { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; }
+.kanban-col { min-width: 250px; flex: 0 0 250px; }
+.kanban-card { font-size: 0.875rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-3">Воронка подбора</h1>
+
+<div class="kanban">
+    {% for stage in stages %}
+    <div class="kanban-col">
+        <div class="card">
+            <div class="card-header text-white" style="background-color:{{ stage.color }}">
+                <strong>{{ stage.name }}</strong>
+                {% with apps_count=apps_by_stage|get_item:stage.id %}
+                <span class="badge bg-light text-dark float-end">{{ apps_count|length }}</span>
+                {% endwith %}
+            </div>
+            <div class="card-body p-2">
+                {% with apps=apps_by_stage|get_item:stage.id %}
+                {% for app in apps %}
+                    <a href="/pipeline/applications/{{ app.pk }}/" class="d-block kanban-card text-decoration-none text-dark mb-2 p-2 border rounded bg-light">
+                        <div class="fw-bold">{{ app.candidate }}</div>
+                        <div class="text-muted small">{{ app.vacancy }}</div>
+                        {% if app.match %}
+                            <span class="badge bg-{{ app.match.color }}">{{ app.match.score }} %</span>
+                        {% endif %}
+                    </a>
+                {% empty %}
+                    <div class="text-muted small p-2">пусто</div>
+                {% endfor %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
