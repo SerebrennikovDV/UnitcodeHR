@@ -1,0 +1,48 @@
+/* Корпоративные стили UnitcodeHR — поверх Bootstrap 5 */
+
+:root {
+    --uc-primary: #0d6efd;
+    --uc-bg: #f8f9fa;
+}
+
+body {
+    background: var(--uc-bg);
+}
+
+.card {
+    border: 1px solid rgba(0,0,0,.075);
+}
+
+footer {
+    background: #ffffff !important;
+}
+
+.badge {
+    font-weight: 500;
+}
+
+/* Kanban-доска воронки */
+.kanban {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+
+.kanban-col {
+    min-width: 270px;
+    flex: 0 0 270px;
+}
+
+.kanban-card {
+    transition: transform 0.1s;
+}
+.kanban-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+/* Адаптация под мобильные */
+@media (max-width: 576px) {
+    .display-5, .display-6 { font-size: 1.75rem; }
+}
