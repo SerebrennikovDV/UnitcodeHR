@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Справочник навыков ({{ skills|length }})</h1>
+<table class="table table-striped">
+    <thead class="table-light"><tr><th>Навык</th><th>Категория</th><th>Лемма</th><th>Синонимы</th></tr></thead>
+    <tbody>
+    {% for s in skills %}
+        <tr>
+            <td><strong>{{ s.name }}</strong></td>
+            <td>{{ s.get_category_display }}</td>
+            <td><code>{{ s.lemma|default:s.name }}</code></td>
+            <td><small class="text-muted">{{ s.aliases|join:", " }}</small></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

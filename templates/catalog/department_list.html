@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Подразделения</h1>
+<ul class="list-group">
+{% for d in departments %}
+    <li class="list-group-item">
+        {{ d.name }}
+        {% if d.parent %}<small class="text-muted">(в составе {{ d.parent }})</small>{% endif %}
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
