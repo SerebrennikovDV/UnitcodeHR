@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ candidate.full_name }}</h1>
+<p class="text-muted">
+    {{ candidate.email|default:"—" }} · {{ candidate.phone|default:"—" }} ·
+    {% if candidate.telegram %}TG: {{ candidate.telegram }} ·{% endif %}
+    Источник: {{ candidate.source|default:"—" }}
+</p>
+
+{% if candidate.is_blacklisted %}
+    <div class="alert alert-danger">Кандидат в чёрном списке.</div>
+{% endif %}
+
+<h4 class="mt-4">Резюме</h4>
+<ul>
+    {% for r in candidate.resumes.all %}
+        <li><a href="{{ r.file.url }}" target="_blank">{{ r.original_filename }}</a>
+            ({{ r.file_size|filesizeformat }}, загружено {{ r.uploaded_at|date:"d.m.Y H:i" }})</li>
+    {% empty %}
+        <li class="text-muted">Резюме не приложено</li>
+    {% endfor %}
+</ul>
+
+<h4>Навыки</h4>
+<div class="d-flex flex-wrap gap-2 mb-3">
+    {% for cs in candidate.candidate_skills.all %}
+        <span class="badge bg-info">{{ cs.skill.name }} · {{ cs.get_level_display }}</span>
+    {% empty %}
+        <span class="text-muted">Навыки не указаны</span>
+    {% endfor %}
+</div>
+
+<h4 class="mt-4">Отклики на вакансии</h4>
+<table class="table">
+    <thead><tr><th>Вакансия</th><th>Этап</th><th>Дата</th><th></th></tr></thead>
+    <tbody>
+    {% for a in candidate.applications.all %}
+        <tr>
+            <td>{{ a.vacancy }}</td>
+            <td><span class="badge" style="background-color:{{ a.current_stage.color }}">{{ a.current_stage }}</span></td>
+            <td>{{ a.created_at|date:"d.m.Y" }}</td>
+            <td><a href="/pipeline/applications/{{ a.pk }}/" class="btn btn-sm btn-outline-primary">Открыть</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% if candidate.notes %}
+<h4>Заметки HR</h4>
+<p>{{ candidate.notes|linebreaks }}</p>
+{% endif %}
+{% endblock %}

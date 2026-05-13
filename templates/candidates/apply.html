@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Отклик на «{{ vacancy.title }}»{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <h1>Отклик на вакансию «{{ vacancy.title }}»</h1>
+        <p class="text-muted">Заполните форму — после отправки система проанализирует ваше резюме и в течение 2 рабочих дней с вами свяжется HR-менеджер.</p>
+
+        <form method="post" enctype="multipart/form-data" class="row g-3">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="col-md-{% if field.name == 'cover_letter' or field.name == 'consent' %}12{% else %}6{% endif %}">
+                    {% if field.name != 'consent' %}<label class="form-label">{{ field.label }}</label>{% endif %}
+                    {% if field.name == 'consent' %}
+                        <div class="form-check">{{ field }} <label class="form-check-label">{{ field.label }}</label></div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                    {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+                </div>
+            {% endfor %}
+            <div class="col-12">
+                <button class="btn btn-primary btn-lg">Отправить отклик</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
