@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Дашборд — {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Здравствуйте, {{ user.first_name|default:user.username }}!</h1>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card text-bg-primary">
+            <div class="card-body">
+                <h6 class="card-subtitle text-white-50">Открытых вакансий</h6>
+                <p class="display-5 fw-bold mb-0">{{ stats.open_vacancies }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-bg-success">
+            <div class="card-body">
+                <h6 class="card-subtitle text-white-50">Кандидатов в базе</h6>
+                <p class="display-5 fw-bold mb-0">{{ stats.total_candidates }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-bg-warning">
+            <div class="card-body">
+                <h6 class="card-subtitle text-white-50">Активных откликов</h6>
+                <p class="display-5 fw-bold mb-0">{{ stats.active_applications }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <h4>Быстрые действия</h4>
+        <div class="list-group">
+            <a href="/vacancies/" class="list-group-item list-group-item-action">
+                <i class="bi bi-briefcase"></i> Управление вакансиями
+            </a>
+            <a href="/candidates/" class="list-group-item list-group-item-action">
+                <i class="bi bi-people"></i> База кандидатов
+            </a>
+            <a href="/pipeline/" class="list-group-item list-group-item-action">
+                <i class="bi bi-kanban"></i> Воронка подбора
+            </a>
+            <a href="/screening/matches/" class="list-group-item list-group-item-action">
+                <i class="bi bi-filter"></i> Скрининг резюме
+            </a>
+            <a href="/analytics/" class="list-group-item list-group-item-action">
+                <i class="bi bi-graph-up"></i> HR-аналитика
+            </a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4>Подсказки</h4>
+        <div class="alert alert-info small">
+            <i class="bi bi-info-circle"></i>
+            Скрининг отклика выполняется автоматически после регистрации кандидата.
+            При показателе соответствия ниже {{ SCREENING_THRESHOLD }} % кандидат
+            переводится в этап «Отклонено системой» — вы можете вернуть его в воронку
+            кнопкой в карточке отклика.
+        </div>
+    </div>
+</div>
+{% endblock %}

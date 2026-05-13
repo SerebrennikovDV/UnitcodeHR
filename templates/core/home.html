@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Открытые вакансии — {{ COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<div class="p-4 p-md-5 mb-4 rounded-3 bg-primary text-white">
+    <h1 class="display-5 fw-bold">Карьера в {{ COMPANY_NAME }}</h1>
+    <p class="lead mb-3">Разработка CRM-систем. Удалённый формат, гибкие формы сотрудничества.</p>
+    <a href="#vacancies" class="btn btn-light btn-lg">Смотреть открытые вакансии</a>
+</div>
+
+<h2 id="vacancies" class="mb-3">Открытые вакансии ({{ open_vacancies|length }})</h2>
+
+{% if open_vacancies %}
+<div class="row g-3">
+    {% for v in open_vacancies %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ v.title }}</h5>
+                <p class="card-text text-muted small">
+                    Опыт от {{ v.min_experience_years }} лет ·
+                    {% if v.deadline %}до {{ v.deadline|date:"d.m.Y" }}{% else %}срок не ограничен{% endif %}
+                </p>
+                <p class="card-text">{{ v.description|truncatewords:20 }}</p>
+            </div>
+            <div class="card-footer bg-white border-0">
+                <a href="{% url 'vacancy_public' v.slug %}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">Открытых вакансий пока нет. Загляните позже!</div>
+{% endif %}
+{% endblock %}
