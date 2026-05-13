@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Скрининг резюме</h1>
+<p class="text-muted">Список откликов отсортирован по убыванию показателя соответствия (score).</p>
+
+<table class="table table-hover">
+    <thead class="table-light">
+        <tr><th>Score</th><th>Вердикт</th><th>Кандидат</th><th>Вакансия</th><th>Опыт</th><th>Найдены</th><th></th></tr>
+    </thead>
+    <tbody>
+    {% for m in matches %}
+        <tr>
+            <td><span class="badge bg-{{ m.color }} fs-6">{{ m.score }} %</span></td>
+            <td>{{ m.get_verdict_display }}</td>
+            <td>{{ m.application.candidate }}</td>
+            <td>{{ m.application.vacancy }}</td>
+            <td>{{ m.extracted_experience_years|default:"—" }} лет</td>
+            <td>
+                {% for k in m.matched_keywords|slice:":5" %}
+                    <span class="badge bg-success-subtle text-dark">{{ k }}</span>
+                {% endfor %}
+            </td>
+            <td><a href="/pipeline/applications/{{ m.application.pk }}/" class="btn btn-sm btn-outline-primary">Открыть</a></td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="7" class="text-center text-muted">Скоринги пока не рассчитаны</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

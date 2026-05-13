@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Обогащение перечня ключевых слов</h1>
+<p class="text-muted">Запрос отправляется в коннекторы внешних источников (hh.ru, SuperJob, Avito) и собирает наиболее частые ключевые слова из похожих вакансий.</p>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-md-10">
+        <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="например: Python разработчик Django">
+    </div>
+    <div class="col-md-2"><button class="btn btn-primary w-100">Найти</button></div>
+</form>
+
+{% if query %}
+    <h4>Найдено {{ keywords|length }} ключевых слов:</h4>
+    <div class="d-flex flex-wrap gap-2">
+        {% for k in keywords %}
+            <span class="badge bg-info text-dark">{{ k }}</span>
+        {% empty %}
+            <em class="text-muted">Ничего не найдено (все коннекторы работают в mock-режиме)</em>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
