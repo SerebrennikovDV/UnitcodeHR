@@ -1,0 +1,11 @@
+[
+  {"model": "accounts.role", "pk": 1, "fields": {
+      "code": "admin", "name": "Администратор",
+      "description": "Полный доступ ко всем разделам системы"}},
+  {"model": "accounts.role", "pk": 2, "fields": {
+      "code": "hr", "name": "HR-менеджер",
+      "description": "Ведёт базу кандидатов, вакансии, воронку, скрининг"}},
+  {"model": "accounts.role", "pk": 3, "fields": {
+      "code": "hiring_manager", "name": "Нанимающий менеджер",
+      "description": "Создаёт заявки на найм, оценивает кандидатов, согласует офферы"}}
+]

@@ -1,0 +1,8 @@
+[
+  {"model": "catalog.department", "pk": 1, "fields": {"name": "ООО «Юниткод»", "parent": null, "is_active": true}},
+  {"model": "catalog.department", "pk": 2, "fields": {"name": "Отдел разработки", "parent": 1, "is_active": true}},
+  {"model": "catalog.department", "pk": 3, "fields": {"name": "Отдел внедрения и поддержки", "parent": 1, "is_active": true}},
+  {"model": "catalog.department", "pk": 4, "fields": {"name": "Отдел продаж", "parent": 1, "is_active": true}},
+  {"model": "catalog.department", "pk": 5, "fields": {"name": "HR-отдел", "parent": 1, "is_active": true}},
+  {"model": "catalog.department", "pk": 6, "fields": {"name": "Бухгалтерия (аутсорс)", "parent": 1, "is_active": true}}
+]
