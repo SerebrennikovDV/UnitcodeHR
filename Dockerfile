@@ -19,9 +19,10 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-# Сборка статики
-RUN python manage.py collectstatic --noinput || true
+RUN chmod +x scripts/entrypoint.sh
 
 EXPOSE 8000
 
-CMD ["gunicorn", "unitcode_hr.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3", "--access-logfile", "-"]
+# entrypoint.sh при старте делает migrate, collectstatic, loaddata, seed_demo,
+# createsuperuser и затем запускает gunicorn. См. scripts/entrypoint.sh.
+CMD ["scripts/entrypoint.sh"]

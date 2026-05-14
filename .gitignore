@@ -40,3 +40,15 @@ dist/
 # Локальные тестовые БД и резервные копии
 *.pgsql.backup
 backups/
+
+# Артефакты автоматизации Render-деплоя (Playwright)
+pub_step*.png
+render_step*.png
+render_logs.png
+render_logs_dump.txt
+fetch_*.png
+_ind_task.txt
+.unitcode-render-profile/
+
+# Локальные настройки Claude
+.claude/
