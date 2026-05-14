@@ -1,0 +1,13 @@
+* text=auto eol=lf
+
+# Shell-скрипты, запускаемые в Linux-контейнере, должны быть с LF
+*.sh text eol=lf
+scripts/entrypoint.sh text eol=lf
+
+# Бинарные форматы
+*.png binary
+*.jpg binary
+*.docx binary
+*.xlsx binary
+*.pdf binary
+*.dt binary
