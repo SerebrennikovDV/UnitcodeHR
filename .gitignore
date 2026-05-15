@@ -50,5 +50,32 @@ fetch_*.png
 _ind_task.txt
 .unitcode-render-profile/
 
+# Скриншоты и текстовые дампы скриптов render_* (отладка, в репо не нужны)
+db*.png
+db*.txt
+deploy_events.png
+deploy_events.txt
+deploy_logs.png
+deploy_logs.txt
+deploy_status.png
+env_dump.png
+env_dump.txt
+env_revealed.png
+env_revealed.txt
+failed_deploy_page.png
+failed_deploy_page.txt
+failed_logs.png
+failed_logs.txt
+manual_*.png
+shell_*.png
+shell_*.txt
+bp_*.png
+bp_*.txt
+e2e_run.log
+e2e_results.txt
+e2e_screens/
+wait_for_200.log
+render_service_url.txt
+
 # Локальные настройки Claude
 .claude/
